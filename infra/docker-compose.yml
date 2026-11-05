@@ -1,0 +1,24 @@
+services:
+  postgres-db:
+    image: postgres:15-alpine
+    container_name: jobtracker-db
+    environment:
+      POSTGRES_USER: jobtracker_user
+      POSTGRES_PASSWORD: jobtracker_password
+      POSTGRES_DB: jobtracker_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  localstack:
+    image: localstack/localstack:4.13.1
+    container_name: jobtracker-s3
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=s3
+      - DEFAULT_REGION=us-east-1
+
+volumes:
+  postgres_data:
